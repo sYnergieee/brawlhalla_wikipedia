@@ -12,6 +12,8 @@ FileDoge service for user images
 1. In mailer.env password for mailer (external, third-party applications, not like in mail) and login (from mail) for sending messages) (in mail.env)
 2. In .env SECRET_STRING for jwt tokens, command in linix, bash:
 > $ openssl rand -hex 32
+3. Run command
+> docker compose up
 
 ## There are 2 roles: administrator and user
 ### User can
