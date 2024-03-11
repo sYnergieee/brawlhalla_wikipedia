@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="name_block">
+        {{event.name}}
+    </div>
+    <div class="skin_block">
+        <ng-container *ngFor="let s of event.skins">
+            <mat-tab-group class="skin_card" animationDuration="300ms">
+                <mat-tab label="Main">
+                    <div class="inside_tab_block">
+                        <button mat-flat-button color="warn" *ngIf="user?.role.id == 2" (click)="deleteFromEventChest(s.skin_id)"><span>Delete from <span *ngIf="s?.event_id">event</span><span *ngIf="s?.chest_id">chest</span></span></button>
+                        <img [src]="getImage(s.skin.img)" class="skin_image" width="200px" height="250px" [ngStyle]="{'cursor':'pointer'}" title="Click to watch full skin" (click)="goToFullSkinPage(s.skin_id)">
+                        <div class="skin_name">{{s.skin.name}}</div>
+                        <div class="skin_cost"><img *ngIf="s.skin.cost"
+                                src="https://static.wikia.nocookie.net/brawlhalla_gamepedia/images/c/cd/Coin_Mammoth.png"
+                                width="20px" height="20px">{{s.skin?.cost}}</div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Extra">
+                    <div class="inside_tab_block_extra">
+                        <div>Exclusive: <span *ngIf="!s.skin.is_exclusive">No</span><span *ngIf="s.skin.is_exclusive">Yes</span>
+                        </div>
+                        <div>Crossover: <span *ngIf="!s.skin.is_crossover">No</span><span *ngIf="s.skin.is_crossover">Yes</span>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </ng-container>
+    </div>
+</div>

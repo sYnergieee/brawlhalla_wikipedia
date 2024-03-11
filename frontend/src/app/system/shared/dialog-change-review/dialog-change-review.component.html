@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Review</h1>
+<div mat-dialog-content>
+  <form class="form" [formGroup]="form">
+    <mat-form-field>
+      <mat-label>Text</mat-label>
+      <textarea matInput formControlName="text"></textarea>
+      <mat-error *ngIf="form.controls['text'].hasError('required')">Text
+        required</mat-error>
+    </mat-form-field>
+    <mat-form-field *ngIf="data.type_id == 1">
+      <mat-label>Mark</mat-label>
+      <input type="number" matInput formControlName="mark" min="1" max="5" step="1">
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions class="buttons">
+  <button mat-flat-button (click)="sendReview()" color="primary" [disabled]="form.invalid">Save review</button>
+  <button mat-flat-button (click)="delReview()" color="warn" *ngIf="!data.legend_id">Delete</button>
+  <button mat-flat-button (click)="onNoClick()">Close</button>
+</div>

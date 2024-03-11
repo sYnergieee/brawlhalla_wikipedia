@@ -1,0 +1,19 @@
+<div class="back">
+    <div class="auth_block">
+      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+        <mat-tab label="Password recovery">
+          <form class="example-form" [formGroup]="form">
+            <mat-form-field>
+                <mat-label>Enter password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                <mat-icon matSuffix>key</mat-icon>
+                <mat-error *ngIf="form.controls['password'].hasError('required')">Password required</mat-error>
+                <mat-error *ngIf="form.controls['password'].hasError('minlength')">Min length is 5</mat-error>
+              </mat-form-field>
+            <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="changePassword()">Restore password</button>
+            <button mat-raised-button color="primary" (click)="backToLogin()">Go back</button>
+          </form>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>

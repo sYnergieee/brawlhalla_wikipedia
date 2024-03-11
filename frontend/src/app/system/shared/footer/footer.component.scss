@@ -1,0 +1,24 @@
+@import "../../../../styles.scss";
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 20px;
+  height: 50px;
+  color: $color-black;
+  font-weight: 500;
+  background: white;
+  box-shadow: 12px 0 15px 0px $color-purple, -12px 0 8px 0 $color-purple;
+  min-width: 320px;
+}
+.item{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+img{
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+}

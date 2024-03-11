@@ -1,0 +1,58 @@
+<div class="container">
+    <button mat-raised-button color="accent" (click)="openDialogSkin()" class="change_button"
+        *ngIf="user?.role_id == 2">Change skin</button>
+    <button mat-flat-button color="warn" (click)="deleteSkin()" class="change_button" *ngIf="user?.role_id == 2">Delete
+        skin</button>
+    <div class="main_block">
+        <div class="skin_weapon_block">
+            <div class="skin_block">
+                <mat-tab-group class="skin_card" animationDuration="300ms">
+                    <mat-tab [label]="skin?.name">
+                        <div class="inside_tab_block">
+                            <img [src]="getImage(skin?.img)" class="skin_image" width="200px" height="250px">
+                        </div>
+                        <div class="purshase_info">
+                            <div class="label_info">Purshase Info</div>
+                            <mat-divider></mat-divider>
+                            <div class="excl_cross">Exclusive: <span *ngIf="!skin?.is_exclusive">No</span><span
+                                    *ngIf="skin?.is_exclusive">Yes</span></div>
+                            <div class="excl_cross">Crossover: <span *ngIf="!skin?.is_crossover">No</span><span
+                                    *ngIf="skin?.is_crossover">Yes</span></div>
+                            <div class="label_info" *ngIf="skin?.chests.length > 0">Chests</div>
+                            <mat-divider *ngIf="skin?.chests.length > 0"></mat-divider>
+                            <div *ngFor="let c of skin?.chests">
+                                <a class="event_chest_link" title="Click to watch chest"
+                                    (click)="goToEventPage(c.chest.id, true)">{{c.chest.name}}</a>
+                            </div>
+                            <div class="label_info" *ngIf="skin?.events.length > 0">Events</div>
+                            <mat-divider *ngIf="skin?.events.length > 0"></mat-divider>
+                            <div *ngFor="let e of skin?.events">
+                                <a class="event_chest_link" title="Click to watch event"
+                                    (click)="goToEventPage(e.event.id, false)">{{e.event.name}}</a>
+                            </div>
+                            <div class="label_info" *ngIf="skin?.purshase_info.length > 0">Purshase info</div>
+                            <mat-divider *ngIf="skin?.purshase_info.length > 0"></mat-divider>
+                            <div *ngFor="let p of skin?.purshase_info" class="p_info">
+                                {{p}}
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+            <div class="weapons_block">
+                <ng-container *ngFor="let w of skin?.weapons">
+                    <div class="card_weapon">
+                        <div class="weapon_name">{{w.name}}</div>
+                        <div class="under_card_block">
+                            <img [src]="getImage(w.img)" width="162px" height="162px">
+                            <div class="inside_card_block">
+                                <img [src]="getImage(w.weapon.img)" width="40px" height="40px">
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+        </div>
+    </div>
+</div>

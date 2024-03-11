@@ -1,0 +1,67 @@
+<div class="container">
+    <div class="panel_block" *ngIf="user?.role.id == 2">
+        <mat-accordion class="example-headers-align" multi>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Add Event
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <form class="example-form" [formGroup]="form">
+                    <mat-form-field>
+                        <mat-label>Name</mat-label>
+                        <input type="text" matInput formControlName="name" placeholder="Anniversary">
+                        <mat-error *ngIf="form.controls['name'].hasError('required')">Name required</mat-error>
+                    </mat-form-field>
+                </form>
+                <button mat-flat-button color="primary" [disabled]="form.invalid" (click)="addEvent()">Submit</button>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Add Chest
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <form class="example-form" [formGroup]="form_c">
+                    <mat-form-field>
+                        <mat-label>Name</mat-label>
+                        <input type="text" matInput formControlName="name" placeholder="Anniversary">
+                        <mat-error *ngIf="form_c.controls['name'].hasError('required')">Name required</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Image link</mat-label>
+                        <input type="text" matInput formControlName="img">
+                        <mat-error *ngIf="form_c.controls['img'].hasError('required')">Name required</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Cost</mat-label>
+                        <input type="number" matInput formControlName="cost">
+                        <mat-error *ngIf="form_c.controls['cost'].hasError('required')">Name required</mat-error>
+                    </mat-form-field>
+                </form>
+                <button mat-flat-button color="primary" [disabled]="form_c.invalid" (click)="addChest()">Submit</button>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <h3>Events</h3>
+    <div class="event_block">
+        <ng-container *ngFor="let e of events">
+            <div class="event"><a (click)="goToEventPage(e.id, false)" title="Click to watch event">{{e.name}}</a></div>
+        </ng-container>
+    </div>
+    <h3>Chests</h3>
+    <div class="chest_block">
+        <ng-container *ngFor="let c of chests">
+            <div class="chest_card">
+                <div class="chest_name">{{c.name}}</div>
+                <img [src]="getImage(c.img)" width="160px" height="140px">
+                <div class="chest_cost">
+                    <img src="https://static.wikia.nocookie.net/brawlhalla_gamepedia/images/c/cd/Coin_Mammoth.png"
+                        width="20px" height="20px">{{c.cost}}
+                    <button mat-icon-button class="button_info" color="primary" title="Click to watch chest"
+                        (click)="goToEventPage(c.id, true)"><mat-icon>info</mat-icon></button>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

@@ -1,0 +1,127 @@
+<h1 mat-dialog-title>Legend</h1>
+<div mat-dialog-content>
+  <form class="form" [formGroup]="form">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input type="text" matInput formControlName="name">
+      <mat-error *ngIf="form.controls['name'].hasError('required')">Name required</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Aka Name</mat-label>
+      <input type="text" matInput formControlName="aka_name">
+      <mat-error *ngIf="form.controls['aka_name'].hasError('required')">Aka name
+        required</mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+      <mat-error *ngIf="form.controls['description'].hasError('required')">Descrition
+        required</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Image main</mat-label>
+      <input type="text" matInput formControlName="img_main">
+      <mat-error *ngIf="form.controls['img_main'].hasError('required')">Link required</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Image short</mat-label>
+      <input type="text" matInput formControlName="img_short">
+      <mat-error *ngIf="form.controls['img_short'].hasError('required')">Link required</mat-error>
+    </mat-form-field>
+    <div class="two_block">
+      <mat-form-field>
+        <mat-label>Cost</mat-label>
+        <input type="number" matInput formControlName="cost" step="100" min="0" max="10000">
+        <mat-error *ngIf="form.controls['cost'].hasError('required')">Cost required</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Release info</mat-label>
+        <input type="text" matInput formControlName="release_info">
+        <mat-error *ngIf="form.controls['release_info'].hasError('required')">Release info
+          required</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="two_block">
+      <div class="add_weapon_block">
+        <mat-form-field>
+          <mat-label>Weapon</mat-label>
+          <input [type]="weap1Input.type" matInput [formControl]="weap1Input.formControl" [matAutocomplete]="autoweap1">
+          <mat-autocomplete autoActiveFirstOption #autoweap1="matAutocomplete">
+            <ng-container *ngFor="let option of weap1Input.values | async">
+              <mat-option [value]="option.name">
+                {{option.name}}
+              </mat-option>
+              <mat-divider></mat-divider>
+            </ng-container>
+          </mat-autocomplete>
+          <mat-error *ngIf="form.controls['weapon_id1'].hasError('required')">Weapon
+            required</mat-error>
+          <mat-icon matSuffix class="option_icon">{{weap1Input.icon}}</mat-icon>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Name (1st weap)</mat-label>
+          <input type="text" matInput formControlName="name1">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Image (1st weap)</mat-label>
+          <input type="text" matInput formControlName="img1">
+        </mat-form-field>
+      </div>
+      <div class="add_weapon_block">
+        <mat-form-field>
+          <mat-label>Weapon</mat-label>
+          <input [type]="weap2Input.type" matInput [formControl]="weap2Input.formControl" [matAutocomplete]="autoweap2">
+          <mat-autocomplete autoActiveFirstOption #autoweap2="matAutocomplete">
+            <ng-container *ngFor="let option of weap2Input.values | async">
+              <mat-option [value]="option.name">
+                {{option.name}}
+              </mat-option>
+              <mat-divider></mat-divider>
+            </ng-container>
+          </mat-autocomplete>
+          <mat-error *ngIf="form.controls['weapon_id2'].hasError('required')">Weapon
+            required</mat-error>
+          <mat-icon matSuffix class="option_icon">{{weap2Input.icon}}</mat-icon>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Name (2nd weap)</mat-label>
+          <input type="text" matInput formControlName="name2">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Image (2nd weap)</mat-label>
+          <input type="text" matInput formControlName="img2">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="add_legend_stat_block">
+      <mat-form-field>
+        <mat-label>Strength</mat-label>
+        <input type="number" matInput formControlName="value1" step="1" min="0" max="10">
+        <mat-error *ngIf="form.controls['value1'].hasError('required')">Stat
+          required</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Dexterity</mat-label>
+        <input type="number" matInput formControlName="value2" step="1" min="0" max="10">
+        <mat-error *ngIf="form.controls['value2'].hasError('required')">Stat
+          required</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Defense</mat-label>
+        <input type="number" matInput formControlName="value3" step="1" min="0" max="10">
+        <mat-error *ngIf="form.controls['value3'].hasError('required')">Stat
+          required</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Speed</mat-label>
+        <input type="number" matInput formControlName="value4" step="1" min="0" max="10">
+        <mat-error *ngIf="form.controls['value4'].hasError('required')">Stat
+          required</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="buttons">
+  <button mat-flat-button color="accent" (click)="changeLegend()">Save changes</button>
+  <button mat-flat-button (click)="onNoClick()">Close</button>
+</div>

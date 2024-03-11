@@ -1,0 +1,5 @@
+GET_FILE_FAILED = "Get file failed"
+FILE_NOT_FOUND = "File not found"
+ADD_FILE_FAILED = "File added failed"
+ADD_FILE_SUCCESS = "File added successfully!"
+DELETE_FILE_FAILED = "File deleted failed"

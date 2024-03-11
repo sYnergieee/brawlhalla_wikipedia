@@ -1,0 +1,140 @@
+<div class="container">
+    <h1>Main info</h1>
+    <div class="main_block">
+        <mat-card class="text_block">
+            <h2>Description</h2>
+            {{legend?.description}}
+        </mat-card>
+        <mat-card class="hero_block">
+            <div class="hero_name">{{legend?.name}}</div>
+            <img [src]="getImage(legend?.img_main)" class="skin_image" width="200px" height="250px">
+            <div class="label_info">Second Name</div>
+            <mat-divider></mat-divider>
+            <div class="label_text">{{legend?.aka_name}}</div>
+            <div class="label_info">Cost</div>
+            <mat-divider></mat-divider>
+            <div class="label_text_coin"><img
+                    src="https://static.wikia.nocookie.net/brawlhalla_gamepedia/images/c/c9/Coin_Gold.png" width="15px"
+                    height="15px">{{legend?.cost}}</div>
+            <div class="label_info">Stats</div>
+            <mat-divider></mat-divider>
+            <div class="stats_block">
+                <ng-container *ngFor="let s of sortBy()">
+                    <div class="stat_inner">
+                        <img [src]="getImage(s?.stat.img)" width="30px" height="30px">
+                        <img [src]="getImage(s?.stat_img.img)" width="150px" height="30px">
+                    </div>
+
+                </ng-container>
+            </div>
+            <div class="label_info">Release Info</div>
+            <mat-divider></mat-divider>
+            <div class="label_text">{{legend.release_info}}</div>
+        </mat-card>
+    </div>
+    <div class="buttons_change_leg_skin">
+        <button mat-raised-button color="accent" (click)="openDialogLegend()" *ngIf="user?.role_id == 2">Change
+            legend</button>
+        <button mat-raised-button color="primary" (click)="openDialogSkin()" *ngIf="user?.role_id == 2">Add
+            skin</button>
+        <button mat-raised-button color="warn" (click)="deleteLegend()" *ngIf="user?.role_id == 2">Delete
+            legend</button>
+    </div>
+    <h1 *ngIf="legend?.weapons[0].name">Weapons</h1>
+    <div class="weapons_block" *ngIf="legend?.weapons[0].name">
+        <ng-container *ngFor="let w of legend?.weapons">
+            <div class="card_weapon">
+                <div class="weapon_name">{{w?.name}}</div>
+                <div class="under_card_block">
+                    <img [src]="getImage(w?.img)" width="162px" height="162px">
+                    <div class="inside_card_block">
+                        <img [src]="getImage(w?.weapon.img)" width="40px" height="40px">
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <h1>Skins</h1>
+    <div class="skin_block">
+        <ng-container *ngFor="let s of legend?.skins">
+            <mat-tab-group class="skin_card" animationDuration="300ms">
+                <mat-tab label="Main">
+                    <div class="inside_tab_block">
+                        <img [src]="getImage(s?.img)" class="skin_image" width="200px" height="250px"
+                            [ngStyle]="{'cursor':'pointer'}" title="Click to watch full skin"
+                            (click)="goToFullSkinPage(s?.id)">
+                        <div class="skin_name">{{s?.name}}</div>
+                        <div class="skin_cost"><img *ngIf="s.cost"
+                                src="https://static.wikia.nocookie.net/brawlhalla_gamepedia/images/c/cd/Coin_Mammoth.png"
+                                width="20px" height="20px">{{s?.cost}}</div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Extra">
+                    <div class="inside_tab_block_extra">
+                        <div>Exclusive: <span *ngIf="!s.is_exclusive">No</span><span *ngIf="s.is_exclusive">Yes</span>
+                        </div>
+                        <div>Crossover: <span *ngIf="!s.is_crossover">No</span><span *ngIf="s.is_crossover">Yes</span>
+                        </div>
+                        <div *ngFor="let p_i of s?.purshase_info">{{p_i}}</div>
+                        <div *ngFor="let e of s?.events"><a class="event_chest_link" title="Click to watch event"
+                                (click)="goToEventPage(e.event.id, false)">{{e?.event.name}}</a></div>
+                        <div *ngFor="let c of s?.chests"><a class="event_chest_link" title="Click to watch chest"
+                                (click)="goToEventPage(c.chest.id, true)">{{c?.chest.name}}</a></div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </ng-container>
+
+    </div>
+    <h1>Reviews</h1>
+    <div class="review_title_block">
+        <mat-button-toggle-group [(ngModel)]="GuideReview" (change)="onValChange()">
+            <mat-button-toggle value="guide">Guides: {{legend.count_reviews.guide_type}}</mat-button-toggle>
+            <mat-button-toggle value="review">Reviews: {{legend.count_reviews.review_count}}</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+    <button mat-raised-button color="primary" class="button_add_review"
+        (click)="openDialog(null, null, null, getTypeIdReview(GuideReview), legend?.id)"><span
+            *ngIf="GuideReview == 'review'">Add review</span><span *ngIf="GuideReview == 'guide'">Add
+            guide</span></button>
+    <div class="paginator_block">
+        <button mat-icon-button color="primary" (click)="backOffset()" [disabled]="offset==1">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div class="paginator_label">{{offset}}</div>
+        <button mat-icon-button color="primary" (click)="forwardOffset()">
+            <mat-icon>arrow_forward</mat-icon>
+        </button>
+    </div>
+    <div class="review_block">
+        <ng-container *ngFor="let r of reviews">
+            <mat-card>
+                <div>
+                    <img *ngIf="isInitialized" [src]="getUserImage(r?.user?.id)" class="user_image">
+                    <div class="text_block_review">
+                        <div class="nickname_date_review">
+                            {{r?.user?.nickname}} <div>{{r?.date | date : "HH:mm - dd.MM.yyyy"}} <span
+                                    *ngIf="r?.change_date">(changed {{r?.change_date | date : "HH:mm -
+                                    dd.MM.yyyy"}})</span></div>
+                        </div>
+                        <mat-divider></mat-divider>
+                        <div class="text_review">
+                            {{r?.text}}
+                        </div>
+                    </div>
+                </div>
+
+                <mat-card-actions align="end">
+                    <div><span *ngIf="r?.mark">Mark: {{r?.mark}}<br></span>Likes: {{r?.count_likes}}</div>
+                    <button mat-icon-button *ngIf="r?.is_like" (click)="likeReview(r?.id)"><img
+                            src="../../../assets/images/like.png"></button>
+                    <button mat-icon-button *ngIf="!r?.is_like" (click)="likeReview(r?.id)"><img
+                            src="../../../assets/images/non-like.png"></button>
+                    <button mat-stroked-button color="primary"
+                        (click)="openDialog(r?.id, r?.mark, r?.text, r?.type_id, null)"
+                        *ngIf="user?.id == r?.user_id">Изменить</button>
+                </mat-card-actions>
+            </mat-card>
+        </ng-container>
+    </div>
+</div>

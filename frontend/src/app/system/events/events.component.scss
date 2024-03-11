@@ -1,0 +1,77 @@
+@import "../../../styles.scss";
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    margin-bottom: 40px;
+}
+
+h3 {
+    font-size: 30px;
+    font-weight: 500;
+    margin-top: 15px;
+}
+
+.event {
+    margin-bottom: 5px;
+
+    a {
+        color: $color-purple;
+        font-size: 16px;
+        font-weight: 400;
+    }
+}
+
+.chest_block {
+    margin-right: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 20px;
+    column-gap: 20px;
+}
+
+.chest_card {
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: $color-purple-card;
+    position: relative;
+    max-width: 250px;
+    min-width: 100px;
+    padding: 10px;
+}
+
+.chest_cost {
+    display: flex;
+    align-items: center;
+}
+
+.button_info {
+    position: absolute;
+    right: 0;
+    bottom: 3px;
+}
+
+.chest_name {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+mat-form-field {
+    width: 100%
+}
+
+.example-form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    column-gap: 20px;
+}
+mat-expansion-panel{
+    button{
+        margin-top: 15px;
+        min-width: 100%;
+    }
+}

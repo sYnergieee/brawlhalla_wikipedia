@@ -1,0 +1,120 @@
+<h1 mat-dialog-title>Skin</h1>
+<div mat-dialog-content>
+  <div class="boolean_block">
+    <label id="example-radio-group-label">Exclusive</label>
+    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-section"
+      [(ngModel)]="exclusive_checked">
+      <mat-radio-button class="example-radio-button" *ngFor="let e of exclusive" [value]="e">
+        {{e}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="boolean_block">
+    <label id="example-radio-group-label">Crossover</label>
+    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-section"
+      [(ngModel)]="crossover_checked">
+      <mat-radio-button class="example-radio-button" *ngFor="let c of crossover" [value]="c">
+        {{c}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <form class="form" [formGroup]="form">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input type="text" matInput formControlName="name">
+      <mat-error *ngIf="form.controls['name'].hasError('required')">Name required</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Image</mat-label>
+      <input type="text" matInput formControlName="img">
+      <mat-error *ngIf="form.controls['img'].hasError('required')">Image required</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Cost</mat-label>
+      <input type="number" matInput formControlName="cost">
+    </mat-form-field>
+    <div class="two_block_weapon">
+      <div class="weapon_block">
+        <mat-form-field>
+          <mat-label>Weapon</mat-label>
+          <input [type]="weap1Input.type" matInput [formControl]="weap1Input.formControl" [matAutocomplete]="autoweap1">
+          <mat-autocomplete autoActiveFirstOption #autoweap1="matAutocomplete">
+            <ng-container *ngFor="let option of weap1Input.values | async">
+              <mat-option [value]="option.name">
+                {{option.name}}
+              </mat-option>
+              <mat-divider></mat-divider>
+            </ng-container>
+          </mat-autocomplete>
+          <mat-error *ngIf="form.controls['weapon1'].hasError('required')">Weapon
+            required</mat-error>
+          <mat-icon matSuffix class="option_icon">{{weap1Input.icon}}</mat-icon>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Name (1st weap)</mat-label>
+          <input type="text" matInput formControlName="name1">
+          <mat-error *ngIf="form.controls['name1'].hasError('required')">Name
+            required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Image (1st weap)</mat-label>
+          <input type="text" matInput formControlName="img1">
+          <mat-error *ngIf="form.controls['img1'].hasError('required')">Image
+            required</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="weapon_block">
+        <mat-form-field>
+          <mat-label>Weapon</mat-label>
+          <input [type]="weap2Input.type" matInput [formControl]="weap2Input.formControl" [matAutocomplete]="autoweap2">
+          <mat-autocomplete autoActiveFirstOption #autoweap2="matAutocomplete">
+            <ng-container *ngFor="let option of weap2Input.values | async">
+              <mat-option [value]="option.name">
+                {{option.name}}
+              </mat-option>
+              <mat-divider></mat-divider>
+            </ng-container>
+          </mat-autocomplete>
+          <mat-error *ngIf="form.controls['weapon2'].hasError('required')">Weapon
+            required</mat-error>
+          <mat-icon matSuffix class="option_icon">{{weap2Input.icon}}</mat-icon>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Name (2nd weap)</mat-label>
+          <input type="text" matInput formControlName="name2">
+          <mat-error *ngIf="form.controls['name2'].hasError('required')">Name
+            required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Image (2nd weap)</mat-label>
+          <input type="text" matInput formControlName="img2">
+          <mat-error *ngIf="form.controls['img2'].hasError('required')">Image
+            required</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <mat-form-field class="example-full-width">
+      <mat-label>Purshase info (new line = new info)</mat-label>
+      <textarea matInput formControlName="purshase_info"></textarea>
+    </mat-form-field>
+  </form>
+  <h3>Events</h3>
+  <section class="example-section">
+    <mat-checkbox [(ngModel)]="ing.checked" *ngFor="let ing of events; let i = index"
+      [ngModelOptions]="{standalone: true}">
+      {{ing.name}}
+    </mat-checkbox>
+  </section>
+  <h3>Chests</h3>
+  <section class="example-section">
+    <mat-checkbox [(ngModel)]="ing.checked" *ngFor="let ing of chests; let i = index"
+      [ngModelOptions]="{standalone: true}">
+      {{ing.name}}
+    </mat-checkbox>
+  </section>
+</div>
+<div mat-dialog-actions class="buttons">
+  <button mat-flat-button color="primary" (click)="addSkin()" *ngIf="!this.data.id">Add skin</button>
+  <button mat-flat-button color="accent" (click)="changeSkin()" *ngIf="this.data.id">Save changes</button>
+  <button mat-flat-button (click)="onNoClick()">Close</button>
+</div>

@@ -1,0 +1,207 @@
+<div class="container">
+    <div class="panel_block">
+        <mat-accordion class="example-headers-align" multi>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Filter
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <form class="example-form" [formGroup]="form">
+                    <div class="first_block">
+                        <mat-form-field>
+                            <mat-label>Legend's name</mat-label>
+                            <input type="text" matInput formControlName="substr" placeholder="Arcadia">
+                            <mat-icon matSuffix>search</mat-icon>
+                        </mat-form-field>
+                        <mat-form-field class="input_number">
+                            <mat-label>Cost ></mat-label>
+                            <input type="number" step="100" matInput formControlName="cost" min="100" max="10000">
+                        </mat-form-field>
+                    </div>
+                    <div class="numbers_block">
+                        <mat-form-field class="input_number">
+                            <mat-label>Strength ></mat-label>
+                            <input type="number" step="1" min="1" max="10" matInput formControlName="strength">
+                        </mat-form-field>
+                        <mat-form-field class="input_number">
+                            <mat-label>Dexterity ></mat-label>
+                            <input type="number" step="1" min="1" max="10" matInput formControlName="dexterity">
+                        </mat-form-field>
+                        <mat-form-field class="input_number">
+                            <mat-label>Defense ></mat-label>
+                            <input type="number" step="1" min="1" max="10" matInput formControlName="defense">
+                        </mat-form-field>
+                        <mat-form-field class="input_number">
+                            <mat-label>Speed ></mat-label>
+                            <input type="number" step="1" min="1" max="10" matInput formControlName="speed">
+                        </mat-form-field>
+                    </div>
+                </form>
+                <h3>Weapons</h3>
+                <section class="example-section">
+                    <mat-checkbox [(ngModel)]="ing.checked" *ngFor="let ing of weapons; let i = index"
+                        [ngModelOptions]="{standalone: true}">
+                        {{ing.name}}
+                    </mat-checkbox>
+                </section>
+                <button mat-flat-button color="primary" class="filter_button" (click)="applyFilter()">Apply
+                    filter</button>
+            </mat-expansion-panel>
+            <mat-expansion-panel *ngIf="user?.role.id == 2">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Add Legend
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <form class="add_legend_form" [formGroup]="form_add">
+                    <mat-form-field>
+                        <mat-label>Name</mat-label>
+                        <input type="text" matInput formControlName="name">
+                        <mat-error *ngIf="form_add.controls['name'].hasError('required')">Name required</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Aka Name</mat-label>
+                        <input type="text" matInput formControlName="aka_name">
+                        <mat-error *ngIf="form_add.controls['aka_name'].hasError('required')">Aka name
+                            required</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput formControlName="description"></textarea>
+                        <mat-error *ngIf="form_add.controls['description'].hasError('required')">Descrition
+                            required</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Image main</mat-label>
+                        <input type="text" matInput formControlName="img_main">
+                        <mat-error *ngIf="form_add.controls['img_main'].hasError('required')">Link required</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Image short</mat-label>
+                        <input type="text" matInput formControlName="img_short">
+                        <mat-error *ngIf="form_add.controls['img_short'].hasError('required')">Link required</mat-error>
+                    </mat-form-field>
+                    <div class="two_block">
+                        <mat-form-field>
+                            <mat-label>Cost</mat-label>
+                            <input type="number" matInput formControlName="cost" step="100" min="0" max="10000">
+                            <mat-error *ngIf="form_add.controls['cost'].hasError('required')">Cost required</mat-error>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Release info</mat-label>
+                            <input type="text" matInput formControlName="release_info">
+                            <mat-error *ngIf="form_add.controls['release_info'].hasError('required')">Release info
+                                required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="two_block">
+                        <div class="add_weapon_block">
+                            <mat-form-field>
+                                <mat-label>Weapon</mat-label>
+                                <input [type]="weap1Input.type" matInput [formControl]="weap1Input.formControl"
+                                    [matAutocomplete]="autoweap1">
+                                <mat-autocomplete autoActiveFirstOption #autoweap1="matAutocomplete">
+                                    <ng-container *ngFor="let option of weap1Input.values | async">
+                                        <mat-option [value]="option.name">
+                                            {{option.name}}
+                                        </mat-option>
+                                        <mat-divider></mat-divider>
+                                    </ng-container>
+                                </mat-autocomplete>
+                                <mat-error *ngIf="form_add.controls['weapon_id1'].hasError('required')">Weapon
+                                    required</mat-error>
+                                <mat-icon matSuffix class="option_icon">{{weap1Input.icon}}</mat-icon>
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-label>Name (1st weap)</mat-label>
+                                <input type="text" matInput formControlName="name1">
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-label>Image (1st weap)</mat-label>
+                                <input type="text" matInput formControlName="img1">
+                            </mat-form-field>
+                        </div>
+                        <div class="add_weapon_block">
+                            <mat-form-field>
+                                <mat-label>Weapon</mat-label>
+                                <input [type]="weap2Input.type" matInput [formControl]="weap2Input.formControl"
+                                    [matAutocomplete]="autoweap2">
+                                <mat-autocomplete autoActiveFirstOption #autoweap2="matAutocomplete">
+                                    <ng-container *ngFor="let option of weap2Input.values | async">
+                                        <mat-option [value]="option.name">
+                                            {{option.name}}
+                                        </mat-option>
+                                        <mat-divider></mat-divider>
+                                    </ng-container>
+                                </mat-autocomplete>
+                                <mat-error *ngIf="form_add.controls['weapon_id2'].hasError('required')">Weapon
+                                    required</mat-error>
+                                <mat-icon matSuffix class="option_icon">{{weap2Input.icon}}</mat-icon>
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-label>Name (2nd weap)</mat-label>
+                                <input type="text" matInput formControlName="name2">
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-label>Image (2nd weap)</mat-label>
+                                <input type="text" matInput formControlName="img2">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="add_legend_stat_block">
+                        <mat-form-field>
+                            <mat-label>Strength</mat-label>
+                            <input type="number" matInput formControlName="value1" step="1" min="0" max="10">
+                            <mat-error *ngIf="form_add.controls['value1'].hasError('required')">Stat
+                                required</mat-error>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Dexterity</mat-label>
+                            <input type="number" matInput formControlName="value2" step="1" min="0" max="10">
+                            <mat-error *ngIf="form_add.controls['value2'].hasError('required')">Stat
+                                required</mat-error>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Defense</mat-label>
+                            <input type="number" matInput formControlName="value3" step="1" min="0" max="10">
+                            <mat-error *ngIf="form_add.controls['value3'].hasError('required')">Stat
+                                required</mat-error>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Speed</mat-label>
+                            <input type="number" matInput formControlName="value4" step="1" min="0" max="10">
+                            <mat-error *ngIf="form_add.controls['value4'].hasError('required')">Stat
+                                required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </form>
+                <button mat-flat-button color="primary" class="filter_button" (click)="addLegend()"
+                    [disabled]="form_add.invalid">Submit</button>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <div class="main_block">
+        <ng-container *ngFor="let leg of legends">
+            <div class="legend_card">
+                <div class="img_weap_block">
+                    <img [src]="getImage(leg.img_short)" class="avat_leg" width="100px" height="100px">
+                    <div class="leg_weapon_block">
+                        <div class="weapon" *ngFor="let w of leg.weapons">
+                            <img [src]="getImage(w.weapon.img)" width="50px" height="50px">
+                        </div>
+                    </div>
+                    <button mat-icon-button class="button_info" color="primary" title="Click to watch legend"
+                        (click)="goToHeroPage(leg.id)"><mat-icon>info</mat-icon></button>
+                </div>
+                <div class="leg_name">{{leg.name}}</div>
+                <div class="leg_stat_block">
+                    <div class="stat" *ngFor="let s of leg.stats">
+                        <img [src]="getImage(s.stat.img)" width="40px" height="40px">
+                        <div class="stat_val">{{s.value}}</div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

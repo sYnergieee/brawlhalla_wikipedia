@@ -1,0 +1,105 @@
+@import "../../../styles.scss";
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 10px;
+}
+
+mat-expansion-panel {
+    button {
+        width: 100%;
+    }
+}
+
+.example-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.paginator_block {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+    .paginator_label {
+        margin-top: 10px;
+        font-weight: 500;
+        font-size: 20px;
+    }
+
+    mat-form-field {
+        max-width: 70px;
+    }
+}
+
+.weapon_block {
+    margin: 0 10px;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: 20px;
+    row-gap: 20px;
+    margin-bottom: 40px;
+}
+
+.example-section {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 10px;
+    row-gap: 10px;
+    margin-bottom: 15px;
+}
+
+.card {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background-color: $color-purple-card;
+    padding: 10px;
+    padding-bottom: 240px;
+    border-radius: 5px;
+    max-width: 230px;
+    min-width: 230px;
+
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+    .under_card_block {
+        position: absolute;
+        bottom: 10px;
+        display: flex;
+        flex-direction: column;
+        column-gap: 10px;
+    }
+
+    .weapon_name {
+        font-size: 18px;
+        font-weight: 500;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .inside_card_block {
+        margin-top: 5px;
+        display: flex;
+        column-gap: 8px;
+
+        button {
+            padding: 0;
+            white-space: pre-wrap;
+            width: 160px;
+        }
+    }
+}
+
+.form_add{
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+.form_add_button{
+    margin-top: 10px;
+}

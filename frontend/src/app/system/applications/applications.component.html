@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="main_block">
+        <mat-accordion class="example-headers-align" multi *ngIf="user?.role.id == 1">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Add Application
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <form class="example-form" [formGroup]="form">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Text</mat-label>
+                        <textarea matInput formControlName="text"></textarea>
+                        <mat-error *ngIf="form.controls['text'].hasError('required')">Text
+                            required</mat-error>
+                    </mat-form-field>
+                </form>
+                <button mat-flat-button color="primary" [disabled]="form.invalid" (click)="addAppl()">Submit</button>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <div class="paginator_block">
+            <button mat-icon-button color="primary" (click)="backOffset()" [disabled]="offset==1">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <div class="paginator_label">{{offset}}</div>
+            <button mat-icon-button color="primary" (click)="forwardOffset()">
+                <mat-icon>arrow_forward</mat-icon>
+            </button>
+        </div>
+        <div class="appl_block">
+            <ng-container *ngFor="let a of appls">
+                <div class="appl_card">
+                    <div class="user_block">
+                        <div>By: {{a.user.nickname}}</div>
+                        <button mat-flat-button color="warn" title="Delete application" (click)="deleteAppl(a.id)" [ngStyle]="{'max-height': '36px'}"><mat-icon>delete</mat-icon></button>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div class="text_block">
+                        {{a.text}}
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,130 @@
+<div class="container">
+    <button mat-raised-button color="accent" class="button_admin" *ngIf="checker_for_admin" (click)="upgradeToAdmin()">Upgrade to Admin</button>
+    <mat-card>
+        <div class="img_block">
+            <img class="user-image" (click)="onOpenFileDialog('file-input')" [src]="displayImg()" title="Change image">
+            <input [ngStyle]="{'display':'none'}" (change)="fileImgChange($event)" id="file-input"
+                accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" />
+        </div>
+        <div class="main_block">
+            <form class="chips_form">
+                <mat-form-field class="example-chip-list">
+                    <mat-label>Heroes</mat-label>
+                    <mat-chip-list #chipList aria-label="Выборка тегов">
+                        <mat-chip *ngFor="let fruit of fruits" (removed)="remove(fruit)"
+                            [ngStyle]="{'background':'linear-gradient(45deg, #0ae7ee 0%, #1276ec 100%)'}">
+                            <img matChipAvatar [src]="getImage(fruit.img_short)" alt="Photo of a Shiba Inu" class="chip_image"/>
+                            {{fruit.name}}
+                            <button matChipRemove [attr.aria-label]="'remove ' + fruit" [disabled]="checker_for_profile_self">
+                                <mat-icon>cancel</mat-icon>
+                            </button>
+                        </mat-chip>
+                    </mat-chip-list>
+                    <input placeholder="Choose legend..." #fruitInput [formControl]="fruitCtrl" [readonly]="checker_for_profile_self"
+                        [matChipInputFor]="chipList" [matAutocomplete]="auto"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="add($event)" />
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                        <mat-option *ngFor="let fruit of filteredFruits | async " [value]="fruit.name">
+                            {{fruit.name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </form>
+            <form [formGroup]="form" class="user_form">
+                <mat-form-field>
+                    <mat-label>Nickname</mat-label>
+                    <input type="text" matInput formControlName="nickname" placeholder="john" [readonly]="checker_for_profile_self">
+                    <mat-icon matSuffix>person</mat-icon>
+                    <mat-error *ngIf="form.controls['nickname'].hasError('required')">Nickname required</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Email</mat-label>
+                    <input type="email" matInput formControlName="email" placeholder="pat@example.com" [readonly]="checker_for_profile_self">
+                    <mat-icon matSuffix>email</mat-icon>
+                    <mat-error *ngIf="form.controls['email'].invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Firstname</mat-label>
+                    <input type="text" matInput formControlName="firstname" placeholder="John" [readonly]="checker_for_profile_self">
+                    <mat-icon matSuffix>person</mat-icon>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Lastname</mat-label>
+                    <input type="text" matInput formControlName="lastname" placeholder="Titor" [readonly]="checker_for_profile_self">
+                    <mat-icon matSuffix>person</mat-icon>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Telegram</mat-label>
+                    <input type="text" matInput formControlName="telegram" placeholder="@john" [readonly]="checker_for_profile_self">
+                    <mat-icon matSuffix>phone</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Discord</mat-label>
+                    <input type="text" matInput formControlName="discord" placeholder="john" [readonly]="checker_for_profile_self">
+                    <mat-icon matSuffix>phone</mat-icon>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Enter password (if you want to change it)</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" [readonly]="checker_for_profile_self">
+                    <mat-icon matSuffix>key</mat-icon>
+                    <mat-error *ngIf="form.controls['password'].hasError('required')">Password required</mat-error>
+                  </mat-form-field>
+            </form>
+            <button mat-flat-button color="primary" (click)="changeUser()" [disabled]="form.invalid" [ngClass]="{display_none: checker_for_profile_self}">Apply changes</button>
+            
+        </div>
+    </mat-card>
+    <button mat-raised-button color="warn" *ngIf="!checker_for_profile_self" class="delete_button" (click)="deleteUser()">Delete profile</button>
+    <h1>Reviews</h1>
+    <div class="review_title_block">
+        <mat-button-toggle-group [(ngModel)]="GuideReview" (change)="onValChange()">
+            <mat-button-toggle value="guide">Guides</mat-button-toggle>
+            <mat-button-toggle value="review">Reviews</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+    <div class="paginator_block">
+        <button mat-icon-button color="primary" (click)="backOffset()" [disabled]="offset==1">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div class="paginator_label">{{offset}}</div>
+        <button mat-icon-button color="primary" (click)="forwardOffset()">
+            <mat-icon>arrow_forward</mat-icon>
+        </button>
+    </div>
+    <div class="review_block">
+        <ng-container *ngFor="let r of reviews">
+            <mat-card>
+                <div>
+                    <div class="img_with_legend_name">
+                        <img [src]="getImage(r?.legend.img_short)" class="user_image">
+                        <div>{{r?.legend.name}}</div>
+                    </div>
+                    
+                    <div class="text_block_review">
+                        <div class="nickname_date_review">
+                            {{r?.user?.nickname}} <div>{{r?.date | date : "HH:mm - dd.MM.yyyy"}} <span
+                                    *ngIf="r?.change_date">(changed {{r?.change_date | date : "HH:mm -
+                                    dd.MM.yyyy"}})</span></div>
+                        </div>
+                        <mat-divider></mat-divider>
+                        <div class="text_review">
+                            {{r?.text}}
+                        </div>
+                    </div>
+                </div>
+
+                <mat-card-actions align="end">
+                    <div><span *ngIf="r?.mark">Mark: {{r?.mark}}<br></span>Likes: {{r?.count_likes}}</div>
+                    <button mat-icon-button *ngIf="r?.is_like" (click)="likeReview(r?.id)"><img
+                            src="../../../assets/images/like.png"></button>
+                    <button mat-icon-button *ngIf="!r?.is_like" (click)="likeReview(r?.id)"><img
+                            src="../../../assets/images/non-like.png"></button>
+                    <button mat-stroked-button color="primary"
+                        (click)="openDialog(r?.id, r?.mark, r?.text, r?.type_id, null)"
+                        *ngIf="usr?.id == r?.user_id">Изменить</button>
+                </mat-card-actions>
+            </mat-card>
+        </ng-container>
+    </div>
+</div>

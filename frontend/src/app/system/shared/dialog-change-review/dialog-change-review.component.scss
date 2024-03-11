@@ -1,0 +1,26 @@
+.form{
+    display: flex;
+    flex-direction: column;
+}
+
+.buttons{
+    display: flex;
+    gap: 5px;
+    button{
+        width: 110px;
+    }
+}
+
+.mat-dialog-actions .mat-button-base+.mat-button-base, .mat-dialog-actions .mat-mdc-button-base+.mat-mdc-button-base{
+    margin-left: 0px;
+}
+
+@media screen and (max-width: 500px){
+    .buttons{
+        flex-direction: column;
+        align-items: center;
+        button{
+            width: 100%;
+        }
+    }
+}

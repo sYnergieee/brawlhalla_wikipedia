@@ -1,0 +1,62 @@
+<div class="container">
+    <div class="filter_block">
+        <mat-accordion class="example-headers-align" multi>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Filter
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <form class="example-form" [formGroup]="form">
+                    <mat-form-field>
+                        <mat-label>User's nickname</mat-label>
+                        <input type="text" matInput formControlName="substr" placeholder="John">
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Role</mat-label>
+                        <input [type]="roleInput.type" matInput [formControl]="roleInput.formControl"
+                            [matAutocomplete]="autorole">
+                        <mat-autocomplete autoActiveFirstOption #autorole="matAutocomplete">
+                            <ng-container *ngFor="let option of roleInput.values | async">
+                                <mat-option [value]="option.name">
+                                    {{option.name}}
+                                </mat-option>
+                                <mat-divider></mat-divider>
+                            </ng-container>
+                        </mat-autocomplete>
+                        <mat-icon matSuffix class="option_icon">{{roleInput.icon}}</mat-icon>
+                    </mat-form-field>
+                </form>
+                <button mat-flat-button color="primary" (click)="applyFilter()">Submit</button>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <div class="main_block">
+        <div class="paginator_block">
+            <button mat-icon-button color="primary" (click)="backOffset()" [disabled]="offset==1">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <div class="paginator_label">{{offset}}</div>
+            <button mat-icon-button color="primary" (click)="forwardOffset()">
+                <mat-icon>arrow_forward</mat-icon>
+            </button>
+        </div>
+        <div class="users_block">
+            <ng-container *ngFor="let u of users">
+                <div class="user_card" title="Click to watch profile" (click)="goToProfile(u.id)">
+                    <img *ngIf="isInitialized" [src]="getUserImage(u.id)" width="150px" height="150px">
+                    <div class="user_card_info">
+                        <div><strong>Nick:</strong> {{u.nickname}}</div>
+                        <div *ngIf="u?.firstname"><strong>First:</strong> {{u?.firstname}}</div>
+                        <div *ngIf="u?.lastname"><strong>Last:</strong> {{u?.lastname}}</div>
+                        <div><strong>RegDate:</strong> {{u.reg_date | date:"dd/MM/yy"}}</div>
+                        <div *ngIf="u?.telegram"><strong>Telegram:</strong> {{u?.telegram}}</div>
+                        <div *ngIf="u?.discord"><strong>Discord:</strong> {{u?.discord}}</div>
+                        <div><strong>Role:</strong> {{u.role.name}}</div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

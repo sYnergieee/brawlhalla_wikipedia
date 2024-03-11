@@ -1,0 +1,20 @@
+<mat-drawer-container class="example-container" [hasBackdrop]="hasBackdrop" fullscreen>
+  <mat-drawer #drawer [mode]="mode" class="drawer">
+    <ng-container *ngFor="let link of links">
+      <a routerLinkActive #rla="routerLinkActive" [ngStyle]="drawerColor(rla.isActive)"
+        [routerLink]="['/system',link.link]">
+        {{link.title}}
+      </a>
+    </ng-container>
+  </mat-drawer>
+  <mat-drawer-content fullscreen class="drawer_content">
+    <button mat-button (click)="drawer.toggle()" class="side_button"><mat-icon>navigate_next</mat-icon></button>
+    <main>
+      <app-header></app-header>
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+      <app-footer></app-footer>
+    </main>
+  </mat-drawer-content>
+</mat-drawer-container>

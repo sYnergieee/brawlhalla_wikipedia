@@ -1,0 +1,36 @@
+$color-purple: #673ab7;
+$color-white: #fafafa;
+$color-black: black;
+$color-purple-card: rgb(251, 238, 255);
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Roboto";
+  font-style: normal;
+}
+
+h1,
+h2,
+body,
+input {
+  padding: 0;
+  margin: 0;
+}
+
+mat-icon {
+  font-family: "Material Icons" !important;
+}
+
+a {
+  cursor: pointer;
+}

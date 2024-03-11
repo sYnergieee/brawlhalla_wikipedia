@@ -1,0 +1,104 @@
+<div class="container">
+    <div class="filter_block">
+        <mat-accordion class="example-headers-align" multi>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Filter
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <form class="example-form" [formGroup]="form">
+                    <mat-form-field>
+                        <mat-label>Weapon's name</mat-label>
+                        <input type="text" matInput formControlName="substr" placeholder="The Hibernator">
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Legend</mat-label>
+                        <input [type]="legendInput.type" matInput [formControl]="legendInput.formControl"
+                            [matAutocomplete]="autoleg">
+                        <mat-autocomplete autoActiveFirstOption #autoleg="matAutocomplete">
+                            <ng-container *ngFor="let option of legendInput.values | async">
+                                <mat-option [value]="option.name">
+                                    {{option.name}}
+                                </mat-option>
+                                <mat-divider></mat-divider>
+                            </ng-container>
+                        </mat-autocomplete>
+                        <mat-icon matSuffix class="option_icon">{{legendInput.icon}}</mat-icon>
+                    </mat-form-field>
+                </form>
+                <h3>Weapon Types</h3>
+                <section class="example-section">
+                    <mat-checkbox [(ngModel)]="ing.checked" *ngFor="let ing of weapon_types; let i = index"
+                        [ngModelOptions]="{standalone: true}">
+                        {{ing.name}}
+                    </mat-checkbox>
+                </section>
+                <h3>Events</h3>
+                <section class="example-section">
+                    <mat-checkbox [(ngModel)]="ing.checked" *ngFor="let ing of events; let i = index"
+                        [ngModelOptions]="{standalone: true}">
+                        {{ing.name}}
+                    </mat-checkbox>
+                </section>
+                <h3>Chests</h3>
+                <section class="example-section">
+                    <mat-checkbox [(ngModel)]="ing.checked" *ngFor="let ing of chests; let i = index"
+                        [ngModelOptions]="{standalone: true}">
+                        {{ing.name}}
+                    </mat-checkbox>
+                </section>
+                <button mat-flat-button color="primary" (click)="applyFilter()">Submit</button>
+            </mat-expansion-panel>
+            <mat-expansion-panel *ngIf="user?.role.id == 2">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Add Weapon Type
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <form class="form_add" [formGroup]="form_add">
+                    <mat-form-field>
+                        <mat-label>Type Name</mat-label>
+                        <input type="text" matInput formControlName="name" placeholder="Hammer">
+                        <mat-error *ngIf="form_add.controls['name'].hasError('required')">Type Name required</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Image Link</mat-label>
+                        <input type="text" matInput formControlName="img">
+                        <mat-error *ngIf="form_add.controls['img'].hasError('required')">Img Link required</mat-error>
+                    </mat-form-field>
+                </form>
+                <button mat-flat-button color="primary" [disabled]="form_add.invalid" class="form_add_button"
+                    (click)="addWeapon()">Submit</button>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <div class="main_block">
+        <div class="paginator_block">
+            <button mat-icon-button color="primary" (click)="backOffset()" [disabled]="offset==1">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <div class="paginator_label">{{offset}}</div>
+            <button mat-icon-button color="primary" (click)="forwardOffset()">
+                <mat-icon>arrow_forward</mat-icon>
+            </button>
+        </div>
+        <div class="weapon_block">
+            <ng-container *ngFor="let w of weapons">
+                <div class="card">
+                    <div class="weapon_name">{{w.name}}</div>
+                    <div class="under_card_block">
+                        <img [src]="getImage(w.img)" width="162px" height="162px">
+                        <div class="inside_card_block">
+                            <img [src]="getImage(w.weapon.img)" width="40px" height="40px">
+                            <button mat-flat-button color="primary"
+                                title="Click to watch skin which includes this weapon"
+                                (click)="goToSkinPage(w.skin.id)">{{w.skin.name}}</button>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

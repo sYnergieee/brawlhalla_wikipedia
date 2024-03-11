@@ -1,0 +1,120 @@
+@import "../../../../styles.scss";
+.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+.header {
+  padding: 0 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  height: 80px;
+  max-height: 80px;
+  min-width: 320px;
+  background-color: $color-white;
+  border-bottom: 2px solid $color-purple;
+  box-shadow: 4px 0 4px 0px $color-purple, -12px 0 8px 0 $color-purple;
+}
+
+.inner_header {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1440px;
+  min-width: 430px;
+  flex-grow: 1;
+  box-sizing: border-box;
+  a {
+    font-size: 15px;
+  }
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 40px;
+  row-gap: 20px;
+  font-size: 18px;
+}
+
+.cover {
+  object-fit: cover;
+  width: 40px;
+  height: 40px;
+}
+
+.account_block {
+  display: flex;
+  column-gap: 10px;
+  max-height: 30px;
+}
+
+.name {
+  font-size: 14px;
+  flex: 1;
+  min-height: 18px;
+}
+
+.role {
+  font-size: 11px;
+  flex: 1;
+  max-height: 15px;
+}
+
+.button_account {
+  position: relative;
+  bottom: 7px;
+  right: 10px;
+}
+a {
+  text-decoration: none;
+  color: $color-black;
+  font-weight: 500;
+}
+
+.notification_button {
+  position: relative;
+  bottom: 10px;
+  left: 7px;
+}
+
+.notification_date{
+  font-size: 13px;
+}
+.button_notification_all{
+  font-size: 14px;
+}
+@media screen and (max-width: 1100px) {
+  nav {
+    font-size: 14px !important;
+    flex-basis: auto;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: unset;
+  }
+}
+
+@media screen and (max-width: 980px) {
+  nav {
+    display: none;
+  }
+  .name {
+    overflow: hidden;
+    max-width: 250px;
+  }
+  .inner_header {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .name_role {
+    max-width: 150px;
+    margin-right: 50px;
+  }
+  .button_account {
+    right: 50px;
+  }
+}
