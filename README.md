@@ -2,6 +2,8 @@
 
 ### Demo [Click here](https://frontend-brawlhalla-wiki.vercel.app/) (without mailer)
 <img src="https://github.com/sYnergieee/brawlhalla_wikipedia/assets/113714097/880db9e5-39ba-48a7-bc41-506ba137e115.png" width="1200" height="500">
+<img src="https://github.com/user-attachments/assets/517d33d0-3d47-4167-b989-63910541377a" width="1200" height="700">
+<img src="https://github.com/user-attachments/assets/e2ba5114-dcfb-4dc9-9157-18efee3efd14" width="1200" height="700">
 
 ## Main technologies used in this project 
 FastAPI, Angular with PostgreSQL Redis, Celery (for mailer) </br>
